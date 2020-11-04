@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace LogisimASM {
     public partial class AssemblyForm : Form {
@@ -71,7 +70,7 @@ namespace LogisimASM {
                 return;
             }
 
-            string outputFilename = Regex.Replace(inputFilename, ".asm", ".rom", RegexOptions.IgnoreCase);
+            string outputFilename = Path.ChangeExtension(inputFilename, ".rom");
 
             try {
                 File.WriteAllText(outputFilename, rom);
