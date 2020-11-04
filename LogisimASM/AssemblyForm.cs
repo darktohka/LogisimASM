@@ -40,7 +40,7 @@ namespace LogisimASM {
         private void browseButton_Click(object sender, EventArgs e) {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "Please choose the file to assemble!";
-            dialog.Filter = "Assembly Script (*.asm)|*.*";
+            dialog.Filter = "Assembly Script (*.asm)|*.asm|All Files (*.*)|*.*";
             dialog.InitialDirectory = Environment.CurrentDirectory;
             dialog.ShowDialog();
 
