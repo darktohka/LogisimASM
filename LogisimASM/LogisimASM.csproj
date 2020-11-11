@@ -58,6 +58,7 @@
       <DependentUpon>AssemblyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Label.cs" />
+    <Compile Include="Opcode.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
