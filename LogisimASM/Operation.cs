@@ -4,18 +4,20 @@ using System.Text.RegularExpressions;
 namespace LogisimASM {
     class Operation {
 
+        public const int RIGHT_HAND = (1 << 1);
+        public const int HAS_IMMEDIATE = (1 << 2);
+        public const int LABELED = (1 << 3);
+        public const int NONE = 0;
+        public const int ALL = RIGHT_HAND | HAS_IMMEDIATE | LABELED;
+
         private string pattern;
         private int opcode;
-        private bool rightHand;
-        private bool immediate;
-        private bool labeled;
+        private int flags;
 
-        public Operation(string pattern, int opcode, bool rightHand, bool immediate, bool labeled) {
+        public Operation(string pattern, int opcode, int flags) {
             this.pattern = pattern;
             this.opcode = opcode;
-            this.rightHand = rightHand;
-            this.immediate = immediate;
-            this.labeled = labeled;
+            this.flags = flags;
         }
 
         public string GetPattern() {
@@ -27,30 +29,30 @@ namespace LogisimASM {
         }
 
         public bool IsRightHand() {
-            return rightHand;
+            return (this.flags & RIGHT_HAND) != 0;
         }
 
         public bool HasImmediate() {
-            return immediate;
+            return (this.flags & HAS_IMMEDIATE) != 0;
         }
 
         public bool IsLabeled() {
-            return labeled;
+            return (this.flags & LABELED) != 0;
         }
 
         public bool IsInput() {
-            return !rightHand && !immediate && !labeled;
+            return this.flags == 0;
         }
 
         public List<Token> Run(GroupCollection matches) {
-            if (rightHand) {
-                if (immediate) {
+            if (IsRightHand()) {
+                if (HasImmediate()) {
                     return Assembler.PackArguments(this.opcode, matches[1].Value, "0", matches[2].Value);
                 } else {
                     return Assembler.PackArguments(this.opcode, matches[1].Value, matches[2].Value, null);
                 }
             } else {
-                if (immediate) {
+                if (HasImmediate()) {
                     return Assembler.PackArguments(this.opcode, "0", "0", matches[1].Value);
                 } else {
                     return Assembler.PackArguments(this.opcode, matches[1].Value, "0", null);

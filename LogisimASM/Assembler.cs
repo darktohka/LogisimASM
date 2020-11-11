@@ -7,28 +7,28 @@ namespace LogisimASM {
     class Assembler {
 
         public static List<Operation> operations = new List<Operation>() {
-            new Operation("and\\s*r([0-3])\\s*,\\s*r([0-3])", 0x0, true, false, false),
-            new Operation("or\\s*r([0-3])\\s*,\\s*r([0-3])", 0x1, true, false, false),
-            new Operation("add\\s*r([0-3])\\s*,\\s*r([0-3])", 0x2, true, false, false),
-            new Operation("sub\\s*r([0-3])\\s*,\\s*r([0-3])", 0x3, true, false, false),
+            new Operation("and\\s*r([0-3])\\s*,\\s*r([0-3])", 0x0, Operation.RIGHT_HAND),
+            new Operation("or\\s*r([0-3])\\s*,\\s*r([0-3])", 0x1, Operation.RIGHT_HAND),
+            new Operation("add\\s*r([0-3])\\s*,\\s*r([0-3])", 0x2, Operation.RIGHT_HAND),
+            new Operation("sub\\s*r([0-3])\\s*,\\s*r([0-3])", 0x3, Operation.RIGHT_HAND),
 
-            new Operation("lw\\s*r([0-3])\\s*,\\s*\\(r\\s*([0-3])\\s*\\)", 0x4, true, false, false),
-            new Operation("sw\\s*r([0-3])\\s*,\\s*\\(r\\s*([0-3])\\s*\\)", 0x5, true, false, false),
+            new Operation("lw\\s*r([0-3])\\s*,\\s*\\(r\\s*([0-3])\\s*\\)", 0x4, Operation.RIGHT_HAND),
+            new Operation("sw\\s*r([0-3])\\s*,\\s*\\(r\\s*([0-3])\\s*\\)", 0x5, Operation.RIGHT_HAND),
 
-            new Operation("mov\\s*r([0-3])\\s*,\\s*r([0-3])", 0x6, true, false, false),
+            new Operation("mov\\s*r([0-3])\\s*,\\s*r([0-3])", 0x6, Operation.RIGHT_HAND),
 
-            new Operation("inp\\s*r([0-3])\\s*", 0x7, false, false, false),
+            new Operation("inp\\s*r([0-3])\\s*", 0x7, Operation.NONE),
 
-            new Operation("jeq\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0x8, true, true, true),
-            new Operation("jne\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0x9, true, true, true),
-            new Operation("jgt\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xa, true, true, true),
-            new Operation("jlt\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xb, true, true, true),
+            new Operation("jeq\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0x8, Operation.ALL),
+            new Operation("jne\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0x9, Operation.ALL),
+            new Operation("jgt\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xa, Operation.ALL),
+            new Operation("jlt\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xb, Operation.ALL),
 
-            new Operation("lw\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xc, true, true, false),
-            new Operation("sw\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xd, true, true, false),
-            new Operation("li\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xe, true, true, false),
+            new Operation("lw\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xc, Operation.RIGHT_HAND | Operation.HAS_IMMEDIATE),
+            new Operation("sw\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xd, Operation.RIGHT_HAND | Operation.HAS_IMMEDIATE),
+            new Operation("li\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xe, Operation.RIGHT_HAND | Operation.HAS_IMMEDIATE),
 
-            new Operation("jmp\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xf, false, true, true)
+            new Operation("jmp\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xf, Operation.HAS_IMMEDIATE | Operation.LABELED)
         };
 
         public static List<Token> PackArguments(int operation, string lhs, string rhs, string im) {
