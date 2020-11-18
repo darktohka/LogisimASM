@@ -10,7 +10,7 @@ namespace LogisimASM {
         public const int PARANTHESES = (1 << 4);
         public const int NONE = 0;
         public const int LABELED_IMMEDIATE = RIGHT_HAND | HAS_IMMEDIATE | LABELED;
-        public const int ALL = RIGHT_HAND | HAS_IMMEDIATE | LABELED | PARANTHESES;
+        public const int ALL = LABELED_IMMEDIATE | PARANTHESES;
 
         private string pattern;
         private int opcode;
@@ -41,6 +41,7 @@ namespace LogisimASM {
         public bool IsLabeled() {
             return (this.flags & LABELED) != 0;
         }
+
         public bool HasParantheses() {
             return (this.flags & PARANTHESES) != 0;
         }
