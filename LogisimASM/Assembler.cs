@@ -12,17 +12,17 @@ namespace LogisimASM {
             new Operation("add\\s*r([0-3])\\s*,\\s*r([0-3])", 0x2, Operation.RIGHT_HAND),
             new Operation("sub\\s*r([0-3])\\s*,\\s*r([0-3])", 0x3, Operation.RIGHT_HAND),
 
-            new Operation("lw\\s*r([0-3])\\s*,\\s*\\(r\\s*([0-3])\\s*\\)", 0x4, Operation.RIGHT_HAND),
-            new Operation("sw\\s*r([0-3])\\s*,\\s*\\(r\\s*([0-3])\\s*\\)", 0x5, Operation.RIGHT_HAND),
+            new Operation("lw\\s*r([0-3])\\s*,\\s*\\(r\\s*([0-3])\\s*\\)", 0x4, Operation.RIGHT_HAND | Operation.PARANTHESES),
+            new Operation("sw\\s*r([0-3])\\s*,\\s*\\(r\\s*([0-3])\\s*\\)", 0x5, Operation.RIGHT_HAND | Operation.PARANTHESES),
 
             new Operation("mov\\s*r([0-3])\\s*,\\s*r([0-3])", 0x6, Operation.RIGHT_HAND),
 
             new Operation("inp\\s*r([0-3])\\s*", 0x7, Operation.NONE),
 
-            new Operation("jeq\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0x8, Operation.ALL),
-            new Operation("jne\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0x9, Operation.ALL),
-            new Operation("jgt\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xa, Operation.ALL),
-            new Operation("jlt\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xb, Operation.ALL),
+            new Operation("jeq\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0x8, Operation.LABELED_IMMEDIATE),
+            new Operation("jne\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0x9, Operation.LABELED_IMMEDIATE),
+            new Operation("jgt\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xa, Operation.LABELED_IMMEDIATE),
+            new Operation("jlt\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xb, Operation.LABELED_IMMEDIATE),
 
             new Operation("lw\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xc, Operation.RIGHT_HAND | Operation.HAS_IMMEDIATE),
             new Operation("sw\\s*r([0-3])\\s*,\\s*(0x[0-9a-f]{2}|[0-9a-z]+)", 0xd, Operation.RIGHT_HAND | Operation.HAS_IMMEDIATE),

@@ -66,6 +66,8 @@ namespace LogisimASM {
                 }
             } else if (operation.IsInput()) {
                 return String.Format("  {0} R{1}", operation.GetOpcode(), GetLeftHand());
+            } else if (operation.HasParantheses()) {
+                return String.Format("  {0} R{1}, (R{2})", operation.GetOpcode(), GetLeftHand(), GetRightHand());
             } else {
                 return String.Format("  {0} R{1}, R{2}", operation.GetOpcode(), GetLeftHand(), GetRightHand());
             }
