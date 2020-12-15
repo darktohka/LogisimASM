@@ -51,7 +51,7 @@ namespace LogisimASM {
             return tokens;
         }
 
-        public static List<Token> Assemble(string asm) {
+        public static List<Token> Assemble(string asm, ref Dictionary<string, int> labels) {
             asm = Regex.Replace(asm, "[ ]*([;#].*)?$", "", RegexOptions.Multiline);
             asm = Regex.Replace(asm, ":", ":\n", RegexOptions.Multiline); // move labels to new lines
             asm = Regex.Replace(asm, "^\\s+", "", RegexOptions.Multiline); // remove blank lines and useless spaces
@@ -81,7 +81,10 @@ namespace LogisimASM {
                     Match match = Regex.Match(line, "([0-9a-z]+):", RegexOptions.IgnoreCase);
 
                     if (match.Success) {
-                        Label.RegisterLabel(match.Groups[1].Value, tokens.Count);
+                        string labelName = match.Groups[1].Value;
+                        int address = tokens.Count;
+
+                        labels[labelName] = tokens.Count;
                         found = true;
                     }
                 }
@@ -95,11 +98,13 @@ namespace LogisimASM {
         }
 
         public static string AssembleToRAM(string asm) {
+            Dictionary<string, int> labels = new Dictionary<string, int>();
             StringBuilder builder = new StringBuilder();
+
             builder.AppendLine("v2.0 raw");
 
-            foreach (Token token in Assemble(asm)) {
-                builder.Append(token.GetValue().ToString("x2"));
+            foreach (Token token in Assemble(asm, ref labels)) {
+                builder.Append(token.GetValue(labels).ToString("x2"));
                 builder.Append(" ");
             }
 

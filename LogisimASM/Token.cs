@@ -1,4 +1,6 @@
-﻿namespace LogisimASM {
+﻿using System.Collections.Generic;
+
+namespace LogisimASM {
     class Token {
 
         private int value;
