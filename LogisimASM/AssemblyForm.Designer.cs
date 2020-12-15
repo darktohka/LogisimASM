@@ -236,7 +236,7 @@
             this.MaximizeBox = false;
             this.Name = "AssemblyForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Logisim 8-bit CPU Assembler v1.0.5";
+            this.Text = "Logisim 8-bit CPU Assembler v1.0.6";
             this.Load += new System.EventHandler(this.AssemblyForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
