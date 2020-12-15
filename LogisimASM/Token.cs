@@ -9,7 +9,7 @@ namespace LogisimASM {
             this.value = value;
         }
 
-        public virtual int GetValue() {
+        public virtual int GetValue(Dictionary<string, int> labels) {
             return this.value;
         }
     }
